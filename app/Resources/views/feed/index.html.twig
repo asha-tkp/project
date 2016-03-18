@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Feed Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% stylesheets 'bundles/css/custom.css' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <style>
+
+    </style>
+</head>
+{% block body %}
+    <body>
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid text-center">
+        <div class="row">
+            <div class="col-sm-12 col-lg-12"><h3>TradeTracker.com Assessment</h3></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2 col-lg-2">
+            </div>
+            <div class="col-sm-8 col-lg-8">
+                {{ form(form) }}
+            </div>
+            <div class="col-sm-2 col-lg-2">
+            </div>
+        </div>
+        {% if products|length >0 %}
+            <div class="row">
+                <div class="col-sm-12 col-lg-12 table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>ProductID</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Price & currency</th>
+                            <th>Categories</th>
+                            <th>ProductURL</th>
+                            <th>ImageURL</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for product in products %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ product.productID }}</td>
+                                <td>{{ product.name }}</td>
+                                <td>{{ product.description }}</td>
+                                <td>{{ product.price['#'] }} {{ product.price['@currency'] }}</td>
+                                <td>{{ product.categoryNames }}</td>
+                                <td>{{ product.productURL }}</td>
+                                <td>{{ product.imageURL }}</td>
+                            </tr>
+                        {% else %}
+                            <td colspan="8"> No Products</td>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    </body>
+{% endblock %}
+
+</html>
