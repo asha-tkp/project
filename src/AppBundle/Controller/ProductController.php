@@ -24,15 +24,7 @@ class ProductController extends Controller
         $products = [];
         if ($request->isMethod('POST')) {
             if ($form->handleRequest($request)->isValid()) {
-                $xml = simplexml_load_file($feed->getUrl());
-
-                $encoders = [new XmlEncoder(), new JsonEncoder()];
-                $normalizers = [new ObjectNormalizer()];
-                $serializer = new Serializer($normalizers, $encoders);
-
-                foreach ($xml->children() as $productXML) {
-                    $products[] = $serializer->deserialize($productXML->asXML(), 'AppBundle\Model\Product', 'xml');
-                }
+                $products = $this->get('product_extractor')->extractProducts($feed);
             }
         }
         return $this->render('feed/index.html.twig', [
