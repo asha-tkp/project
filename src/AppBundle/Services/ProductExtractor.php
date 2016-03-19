@@ -13,15 +13,16 @@ class ProductExtractor
     public function extractProducts(Feed $feed)
     {
         $products =[];
-        $xml = simplexml_load_file($feed->getUrl());
+        if(@simplexml_load_file($feed->getUrl())){
+            $xml = simplexml_load_file($feed->getUrl());
+            $encoders = [new XmlEncoder()];
+            $normalizers = [new ObjectNormalizer()];
+            $serializer = new Serializer($normalizers, $encoders);
 
-        $encoders = [new XmlEncoder()];
-        $normalizers = [new ObjectNormalizer()];
-        $serializer = new Serializer($normalizers, $encoders);
-
-        foreach ($xml->children() as $productXML) {
-            $products[] = $serializer->deserialize($productXML->asXML(), 'AppBundle\Model\Product', 'xml');
-        }
+            foreach ($xml->children() as $productXML) {
+                $products[] = $serializer->deserialize($productXML->asXML(), 'AppBundle\Model\Product', 'xml');
+            }
+        };
 
         return $products;
     }
