@@ -4,5 +4,5 @@ parameters:
 #    parameter_name: value
 
 services:
-  product_extractor:
-    class: AppBundle\Services\ProductExtractor
+  pj_streamer:
+      class: AppBundle\Services\PJStreamer

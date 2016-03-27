@@ -6,20 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     {% stylesheets 'bundles/css/custom.css' %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
+    <link rel="stylesheet" href="{{ asset_url }}"/>
     {% endstylesheets %}
 
 
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    {#<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>#}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ asset('bundles/js/pjstreamer.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
     <style>
 
     </style>
 </head>
 {% block body %}
-    <body>
-
+    <body ng-app="myApp">
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="myNavbar">
@@ -29,21 +32,23 @@
             </div>
         </div>
     </nav>
-
+    {#10+20 = {% verbatim %} {{ 10+20 }}{% endverbatim %}#}
     <div class="container-fluid text-center">
         <div class="row">
             <div class="col-sm-12 col-lg-12"><h3>TradeTracker.com Assessment</h3></div>
         </div>
-        <div class="row">
-            <div class="col-sm-2 col-lg-2">
+        <div>
+            <div class="row">
+                <div class="col-sm-2 col-lg-2">
+                </div>
+                <div class="col-sm-8 col-lg-8">
+                    {{ form(form) }}
+                    {#<a class="btn btn-default" >Submit</a>#}
+                </div>
+                <div class="col-sm-2 col-lg-2">
+                </div>
             </div>
-            <div class="col-sm-8 col-lg-8">
-                {{ form(form) }}
-            </div>
-            <div class="col-sm-2 col-lg-2">
-            </div>
-        </div>
-        {% if products|length >0 %}
+            {#{% if products|length >0 %}#}
             <div class="row">
                 <div class="col-sm-12 col-lg-12 table-responsive">
                     <table class="table">
@@ -59,28 +64,109 @@
                             <th>ImageURL</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        {% for product in products %}
-                            <tr>
-                                <td>{{ loop.index }}</td>
-                                <td>{{ product.productID }}</td>
-                                <td>{{ product.name }}</td>
-                                <td>{{ product.description }}</td>
-                                <td>{{ product.price['#'] }} {{ product.price['@currency'] }}</td>
-                                <td>{{ product.categoryNames }}</td>
-                                <td>{{ product.productURL }}</td>
-                                <td>{{ product.imageURL }}</td>
-                            </tr>
-                        {% else %}
-                            <td colspan="8"> No Products</td>
-                        {% endfor %}
+                        <tbody class="table-body">
+
+
+                        {#{% for product in products %}#}
+                        {#<tr>#}
+                        {#<td>{{ loop.index }}</td>#}
+                        {#<td>{{ product.productID }}</td>#}
+                        {#<td>{{ product.name }}</td>#}
+                        {#<td>{{ product.description }}</td>#}
+                        {#<td>{{ product.price['#'] }} {{ product.price['@currency'] }}</td>#}
+                        {#<td>{{ product.categoryNames }}</td>#}
+                        {#<td>{{ product.productURL }}</td>#}
+                        {#<td>{{ product.imageURL }}</td>#}
+                        {#</tr>#}
+                        {#{% else %}#}
+                        {#<td colspan="8"> No Products</td>#}
+                        {#{% endfor %}#}
                         </tbody>
                     </table>
                 </div>
             </div>
-        {% endif %}
+            {#{% endif %}#}
+        </div>
     </div>
     </body>
 {% endblock %}
 
+{% block javasripts %}
+    <script language="javascript">
+
+        //Ajax Form Submission
+        $(document).ready(function ($) {
+            var xmlhttp = null;
+            $('.submit').click(function (e) {
+                e.preventDefault();
+                if (!$('.url').val()) {
+                    // validate
+                    alert('Enter URL');
+                    return false;
+                }
+
+                if (xmlhttp) {
+                    // Abort the AJAX request.
+                    xmlhttp.abort();
+
+                }
+
+                $('tbody tr').remove();
+
+                var form = $('body').find('form');
+                var data = form.serialize();
+                var route = Routing.generate('product');
+
+                xmlhttp = new XMLHttpRequest();
+                xmlhttp.open("POST", route, true);
+                xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                var $i = 1;
+                new PJStreamer(xmlhttp, function (data) {
+                     // render received data
+                    data = $.parseJSON(data);
+                    var html = '';
+                    html += '<tr>';
+                    html += '<td>' + $i + '</td>';
+                    html += '<td>' + data['productID'] + '</td>';
+                    html += '<td>' + data['name'] + '</td>';
+                    html += '<td>' + data['description'] + '</td>';
+                    html += '<td>' + data['price']['@currency'] + ' ' + data['price']['#'] + '</td>';
+                    html += '<td>' + data['categories']['category']['@path'] + '</td>';
+                    html += '<td>' + data['productURL'] + '</td>';
+                    html += '<td>' + data['imageURL'] + '</td>';
+                    html += '</tr>';
+                    $i = $i + 1;
+                    $('.table-body').append(html);
+
+                }).start(data);
+            });
+
+//            var app = angular.module('myApp', ['ngTable']);
+//
+//            app.controller('myController', function ($scope, ngTableParams) {
+//
+//                var xmlhttp = new XMLHttpRequest();
+//                xmlhttp.open("POST", route, true);
+//                xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+//                new PJStreamer(xmlhttp, function (data) {
+//
+//                    $scope.tableParams = new ngTableParams({}, {
+//                        total: data.length, // length of data
+//                        getData: function ($defer, params) {
+//            use
+//            build -in angular
+//            filter
+//                            var orderedData = params.sorting() ?
+//                                    $filter('orderBy')(data, params.orderBy()) :
+//                                    data;
+//
+//                            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+//                        }
+//                    });
+//                });
+//            }).start(data);
+//
+        });
+    </script>
+{% endblock %}
 </html>
