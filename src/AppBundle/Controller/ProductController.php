@@ -4,7 +4,6 @@ namespace AppBundle\Controller;
 
 use AppBundle\Form\FeedType;
 use AppBundle\Model\Feed;
-use AppBundle\Model\Product;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;

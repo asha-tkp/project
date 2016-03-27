@@ -32,7 +32,6 @@
             </div>
         </div>
     </nav>
-    {#10+20 = {% verbatim %} {{ 10+20 }}{% endverbatim %}#}
     <div class="container-fluid text-center">
         <div class="row">
             <div class="col-sm-12 col-lg-12"><h3>TradeTracker.com Assessment</h3></div>
@@ -43,12 +42,10 @@
                 </div>
                 <div class="col-sm-8 col-lg-8">
                     {{ form(form) }}
-                    {#<a class="btn btn-default" >Submit</a>#}
                 </div>
                 <div class="col-sm-2 col-lg-2">
                 </div>
             </div>
-            {#{% if products|length >0 %}#}
             <div class="row">
                 <div class="col-sm-12 col-lg-12 table-responsive">
                     <table class="table">
@@ -66,26 +63,10 @@
                         </thead>
                         <tbody class="table-body">
 
-
-                        {#{% for product in products %}#}
-                        {#<tr>#}
-                        {#<td>{{ loop.index }}</td>#}
-                        {#<td>{{ product.productID }}</td>#}
-                        {#<td>{{ product.name }}</td>#}
-                        {#<td>{{ product.description }}</td>#}
-                        {#<td>{{ product.price['#'] }} {{ product.price['@currency'] }}</td>#}
-                        {#<td>{{ product.categoryNames }}</td>#}
-                        {#<td>{{ product.productURL }}</td>#}
-                        {#<td>{{ product.imageURL }}</td>#}
-                        {#</tr>#}
-                        {#{% else %}#}
-                        {#<td colspan="8"> No Products</td>#}
-                        {#{% endfor %}#}
                         </tbody>
                     </table>
                 </div>
             </div>
-            {#{% endif %}#}
         </div>
     </div>
     </body>
@@ -140,32 +121,6 @@
 
                 }).start(data);
             });
-
-//            var app = angular.module('myApp', ['ngTable']);
-//
-//            app.controller('myController', function ($scope, ngTableParams) {
-//
-//                var xmlhttp = new XMLHttpRequest();
-//                xmlhttp.open("POST", route, true);
-//                xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-//                new PJStreamer(xmlhttp, function (data) {
-//
-//                    $scope.tableParams = new ngTableParams({}, {
-//                        total: data.length, // length of data
-//                        getData: function ($defer, params) {
-//            use
-//            build -in angular
-//            filter
-//                            var orderedData = params.sorting() ?
-//                                    $filter('orderBy')(data, params.orderBy()) :
-//                                    data;
-//
-//                            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-//                        }
-//                    });
-//                });
-//            }).start(data);
-//
         });
     </script>
 {% endblock %}
