@@ -6,3 +6,6 @@ parameters:
 services:
   pj_streamer:
       class: AppBundle\Services\PJStreamer
+  extractor:
+      class: AppBundle\Services\Extractor
+      arguments: ["@pj_streamer"]

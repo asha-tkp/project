@@ -1,1 +1,1 @@
-fos.Router.setData({"base_url":"","routes":[],"prefix":"","host":"localhost","scheme":"http"});
+fos.Router.setData({"base_url":"","routes":{"product":{"tokens":[["text","\/product"]],"defaults":[],"requirements":[],"hosttokens":[]}},"prefix":"","host":"localhost","scheme":"http"});
