@@ -15,3 +15,7 @@ Docker
  * To run the application, go to ``` http://localhost:8000/product``` in browser.
  * URL for feed : http://pf.tradetracker.net/?aid=1&type=xml&encoding=utf-8&fid=251713&categoryType=2&additionalType=2&limit=100
 
+ #### Running tests
+
+ Test is available in AppBundle/Tests folder and can be run by executing ``` vendor/bin/phpunit src/AppBundle/Tests ``` in the container
+
