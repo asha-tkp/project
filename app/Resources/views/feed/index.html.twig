@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {% stylesheets 'bundles/css/custom.css' %}
+    {% stylesheets 'bundles/app/css/custom.css' %}
     <link rel="stylesheet" href="{{ asset_url }}"/>
     {% endstylesheets %}
 
@@ -15,7 +15,7 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     {#<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>#}
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-    <script src="{{ asset('bundles/js/pjstreamer.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/pjstreamer.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
     <style>
 
@@ -111,7 +111,7 @@
                     html += '<td>' + data['productID'] + '</td>';
                     html += '<td>' + data['name'] + '</td>';
                     html += '<td>' + data['description'] + '</td>';
-                    html += '<td>' + data['price']['@currency'] + ' ' + data['price']['#'] + '</td>';
+                    html += '<td>' + data['price']['#'] + ' ' + data['price']['@currency'] + '</td>';
                     html += '<td>' + data['categories']['category']['@path'] + '</td>';
                     html += '<td>' + data['productURL'] + '</td>';
                     html += '<td>' + data['imageURL'] + '</td>';
