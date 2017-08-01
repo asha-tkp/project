@@ -10,7 +10,5 @@ composer install
 /var/www/html/bin/console assets:install
 /var/www/html/bin/console assetic:dump
 
-
-chmod -R 777 /var/www/html/var/cache
-chmod -R 777 /var/www/html/var/logs
-chmod -R 777 /var/www/html/var/sessions
+mkdir -p  /var/www/html/var/sessions/dev
+chmod -R 777 /var/www/html/var/*
