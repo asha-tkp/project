@@ -15,6 +15,7 @@ class ProductController extends Controller
      */
     public function renderProductsAction(Request $request)
     {
+        ini_set("memory_limit","32M");
         $feed = new Feed();
         $form = $this->createForm(FeedType::class, $feed);
         if ($request->isMethod('POST')) {
