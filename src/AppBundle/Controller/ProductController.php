@@ -19,7 +19,6 @@ class ProductController extends Controller
         $form = $this->createForm(FeedType::class, $feed);
         if ($request->isMethod('POST')) {
             if ($form->handleRequest($request)->isValid()) {
-                dump($feed);
                 return $this->get('extractor')->extract($feed);
             }
         }
