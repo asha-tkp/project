@@ -1,31 +1,17 @@
-Project
-=======
+### Prerequisites
 
-A Symfony project created on March 16, 2016, 10:08 pm.
+Docker
 
-Steps for working solution.
 
-1. Unzip project from https://drive.google.com/file/d/0B2LAZCksPeaSQWJrclVZYkZyamM/view?usp=sharing or clone project from https://github.com/asha-tkp/project to local projects folder.
+### Steps for running the application
 
-2. In command console, run composer.phar install
+ * Pull the image using 
+     - ``` docker pull ashatp/tradetracker:1.0 ```
+ * Start the container using below command
+   - ``` docker run --rm -d --name demo -p 8000:80 ashatp/tradetracker:1.0```
+* Install dependencies using
+   - ``` docker exec -it demo /bin/bash bin/run.sh ```
 
-3. Run php app/console server:run to start server	(Server running on http://127.0.0.1:8000)
+* To run the application, go to ``` http://localhost:8000/product``` in browser.
+* URL for feed : http://pf.tradetracker.net/?aid=1&type=xml&encoding=utf-8&fid=251713&categoryType=2&additionalType=2&limit=100
 
-4. Run php app/console fos:js-routing:dump
-
-5. Run app/console assetic:dump 
-
-6. In Browser, go to http://127.0.0.1:8000/product
-
-7. The project uses http-basic authentication. Enter username : user and password : userpass
-
-8. Enter the url for the product feed.
-
-###### If using php5.6+
-
-* set always_populate_raw_post_data = -1 in php.ini
-
-######  Running tests
-
-Project uses phpUnit tests.
-To run tests,  run :  phpunit src/AppBundle/Tests
